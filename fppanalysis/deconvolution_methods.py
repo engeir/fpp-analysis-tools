@@ -99,6 +99,7 @@ def RL_gauss_deconvolve(
         b = cutoff
 
     count = 0
+    enn = len(signal)
 
     for i in tqdm(range(1, iteration_list[-1] + 1), position=0, leave=True):
         # If an element in the previous iteration is very close to zero,
@@ -106,12 +107,16 @@ def RL_gauss_deconvolve(
         # This is handeled numerically by setting all elements <= cutoff to 0
         # and only performing the interation on those elements > cutoff.
 
+        in_sum = signal_temporary - fftconvolve(kern_temporary, current_result, "same")
+        inv_ker_conv_one = fftconvolve(inverse_kern, xp.ones(inverse_kern.size), "same")
+        fin_mean_correction = 1 / enn * inv_ker_conv_one * xp.sum(in_sum)
+
         updated_convolution = fftconvolve(
             current_result, kern_convolution_inverse_kern, "same"
         )
 
         updated_result = (current_result * (signal_convolution_inverse_kern + b)) / (
-            updated_convolution + b
+            updated_convolution + b + fin_mean_correction
         )
 
         error[i] = xp.sum(
