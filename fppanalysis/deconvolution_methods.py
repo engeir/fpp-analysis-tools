@@ -84,7 +84,9 @@ def RL_gauss_deconvolve(
 
     inverse_kern = kern_temporary[::-1]
     signal_convolution_inverse_kern = fftconvolve(
-        signal_temporary, inverse_kern, "same"
+        signal_temporary - xp.ones(signal_temporary.size) * signal_temporary.mean(),
+        inverse_kern,
+        "same",
     )
     kern_convolution_inverse_kern = fftconvolve(kern_temporary, inverse_kern, "same")
 
@@ -107,7 +109,7 @@ def RL_gauss_deconvolve(
         # This is handeled numerically by setting all elements <= cutoff to 0
         # and only performing the interation on those elements > cutoff.
 
-        in_sum = signal_temporary - fftconvolve(kern_temporary, current_result, "same")
+        in_sum = fftconvolve(kern_temporary, current_result, "same")
         inv_ker_conv_one = fftconvolve(inverse_kern, xp.ones(inverse_kern.size), "same")
         fin_mean_correction = 1 / enn * inv_ker_conv_one * xp.sum(in_sum)
 
@@ -116,7 +118,7 @@ def RL_gauss_deconvolve(
         )
 
         updated_result = (current_result * (signal_convolution_inverse_kern + b)) / (
-            updated_convolution + b + fin_mean_correction
+            updated_convolution + b - fin_mean_correction
         )
 
         error[i] = xp.sum(
