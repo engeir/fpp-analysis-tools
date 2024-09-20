@@ -59,7 +59,7 @@ def RL_gauss_deconvolve(
 
     if gpu:
         import cupy as xp
-        from cusignal.convolution.convolve import fftconvolve
+        from cupyx.scipy.signal import fftconvolve
     else:
         import numpy as xp
         from scipy.signal import fftconvolve
