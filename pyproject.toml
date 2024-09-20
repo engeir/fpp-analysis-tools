@@ -1,21 +1,25 @@
-[tool.poetry]
+[project]
 name = "fppanalysis"
 version = "0.2.0"
 description = "Analysis tools for time series"
-homepage = "https://github.com/uit-cosmo/fpp-analysis-tools"
-authors = ["gregordecristoforo <gregor.decristoforo@gmail.com>"]
+authors = [
+  { name = "gregordecristoforo", email = "gregor.decristoforo@gmail.com" },
+]
 license = "MIT"
 readme = "README.md"
+requires-python = "3.9"
+dependencies = [
+  "scipy=>=1.8.0",
+  "tqdm>=4.62.3",
+  "pywavelets>=1.6.0",
+  "matplotlib>=3.6.3",
+  "mpmath>=1.2.1",
+  "numpy>=1.26.4",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-scipy = "^1.8.0"
-tqdm = "^4.62.3"
-pywavelets = "^1.6.0"
-matplotlib = "^3.6.3"
-mpmath = "^1.2.1"
-numpy = ">=1.26.4,<3.0.0"
+[project.urls]
+homepage = "https://github.com/uit-cosmo/fpp-analysis-tools"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
