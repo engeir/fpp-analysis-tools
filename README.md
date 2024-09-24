@@ -20,7 +20,7 @@ poetry install
 ```
 
 If you plan to use the GPUs, specifically useful for the deconvolution, (local)
-installation using both [pixi] and [conda] is supported (the conda environment file is
+installation using either [pixi] or [conda] is supported (the conda environment file is
 exported by pixi):
 
 ```sh
@@ -30,6 +30,22 @@ cd fpp-analysis-tools
 pixi install
 # conda
 conda env create --name name-of-my-env --file environment.yml
+```
+
+### Troubleshooting
+
+There is a chance you face a `Failed to import CuPy.` issue, or that the libfile is not
+found (see a more thorough walk-through
+[here](https://www.positioniseverything.net/importerror-libcublas.so.9.0-cannot-open-shared-object-file-no-such-file-or-directory/)).
+
+Check if you can find the file `libcublas.so.10` (or `libcuda.so` or similar) in
+`/usr/lib/` or any of its subdirectories. (For example
+`find /usr/lib/ -name 'libcublas.so*'`, or with [fd] `fd libcublas.so /usr/lib`). On the
+machine used by our group, the following extra step is necessary after installing the
+project:
+
+```sh
+export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu/"
 ```
 
 ## Usage
@@ -43,6 +59,7 @@ bin_centers, hist = fa.get_hist(Data, N)
 ```
 
 [conda]: https://docs.conda.io/en/latest/index.html
+[fd]: https://github.com/sharkdp/fd
 [poetry]: https://python-poetry.org/
 [pixi]: https://pixi.sh/latest/
 [pypi]: https://pypi.org/
