@@ -59,14 +59,10 @@ def RL_gauss_deconvolve(
 
     if gpu:
         import cupy as xp
-        from cusignal.convolution.convolve import fftconvolve
+        from cupyx.scipy.signal import fftconvolve
     else:
         import numpy as xp
         from scipy.signal import fftconvolve
-
-    if gpu:
-        pool = xp.cuda.MemoryPool(xp.cuda.malloc_managed)
-        xp.cuda.set_allocator(pool.malloc)
 
     if initial_guess is None:
         current_result = xp.ones(signal.size)
