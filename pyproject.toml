@@ -19,3 +19,12 @@ numpy = ">=1.26.4,<3.0.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pixi.dependencies]
+python = ">=3.9,<4"
+cupy = ">=10,<11"
+cudatoolkit = ">=11.8.0,<12"
+
+[tool.pixi.project]
+channels = ["conda-forge", "rapidsai", "nvidia"]
+platforms = ["win-64", "linux-64"]
