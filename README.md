@@ -21,7 +21,7 @@ poetry install
 
 If you plan to use the GPUs, specifically useful for the deconvolution, (local)
 installation using either [pixi] or [conda] is supported (the conda environment file is
-exported by pixi):
+exported by pixi as `pixi project export conda-environment environment.yml`):
 
 ```sh
 git clone git@github.com:uit-cosmo/fpp-analysis-tools.git
