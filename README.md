@@ -4,14 +4,14 @@ Collection of tools designed to analyse time series of intermittent fluctuations
 
 ## Installation
 
-The package is published to PyPI and can be installed with
+The package ~~is published to [PyPI] and~~ can be installed with
 
 ```sh
-pip install fppanalysis
+pip install git+https://github.com/uit-cosmo/fpp-analysis-tools
 ```
 
-If you want the development version you must first clone the repo to your local machine,
-then install the project in development mode:
+If you want to contribute to the project you must first clone the repo to your local
+machine, then install the project using [poetry]:
 
 ```sh
 git clone git@github.com:uit-cosmo/fpp-analysis-tools.git
@@ -19,23 +19,30 @@ cd fpp-analysis-tools
 poetry install
 ```
 
-If you plan to use the GPUs, specifically for the deconvolution then setup the following conda environment:
+If you plan to use the GPUs, specifically useful for the deconvolution, (local)
+installation using both [pixi] and [conda] is supported (the conda environment file is
+exported by pixi):
 
 ```sh
-conda create --name my-env
-conda activate my-env
-conda install -c rapidsai -c nvidia -c conda-forge \
-    cusignal=21.08 python=3.9 cudatoolkit=11.0
-conda install poetry 
-poetry install
+git clone git@github.com:uit-cosmo/fpp-analysis-tools.git
+cd fpp-analysis-tools
+# pixi
+pixi install
+# conda
+conda create --name name-of-my-env --file environment.yml
 ```
 
 ## Usage
 
 You can import all functions directly from `fppanalysis`, such as
 
-```Python
+```python
 import fppanalysis as fa
 
 bin_centers, hist = fa.get_hist(Data, N)
 ```
+
+[conda]: https://docs.conda.io/en/latest/index.html
+[poetry]: https://python-poetry.org/
+[pixi]: https://pixi.sh/latest/
+[pypi]: https://pypi.org/
